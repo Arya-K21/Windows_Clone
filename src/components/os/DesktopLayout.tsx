@@ -11,7 +11,7 @@ import { StartMenuApps, DesktopShortcuts } from "@/lib/os-data";
 import AboutPage from "@/app/about/page";
 import ContactPage from "@/app/contact/page";
 import { HomeView } from "@/components/home/HomeView"; // We can reuse this inside a window or as part of "File Explorer"
-import ProjectDetail from "@/app/project/[slug]/page";
+
 
 // Map IDs to Content Components
 const APP_CONTENT: Record<string, React.ReactNode> = {

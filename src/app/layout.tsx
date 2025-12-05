@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google"; // Or use Roboto as user mentioned? User said "e.g. from Google Fonts like Inter, Roboto". Inter is default.
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ClientLayout } from "@/components/layout/ClientLayout";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
