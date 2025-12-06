@@ -10,13 +10,14 @@ import { useTheme } from "next-themes";
 
 interface TaskbarProps {
   onStartClick: () => void;
+  onExplorerClick: () => void; // <--- Handler for the pinned Explorer icon
   isStartOpen: boolean;
   openWindows: { id: string; title: string; icon: any }[];
   activeWindowId: string | null;
   onWindowClick: (id: string) => void;
 }
 
-export const Taskbar = ({ onStartClick, isStartOpen, openWindows, activeWindowId, onWindowClick }: TaskbarProps) => {
+export const Taskbar = ({ onStartClick, onExplorerClick, isStartOpen, openWindows, activeWindowId, onWindowClick }: TaskbarProps) => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -61,11 +62,30 @@ export const Taskbar = ({ onStartClick, isStartOpen, openWindows, activeWindowId
              <Search size={22} strokeWidth={2.5} />
         </div>
 
-        {/* Task View */}
-        <div className="p-2 rounded hover:bg-white/50 dark:hover:bg-white/10 transition-colors cursor-pointer text-gray-700 dark:text-gray-200 hidden sm:block">
-             <div className="w-5 h-5 border-2 border-current rounded bg-transparent relative">
-                 <div className="absolute -right-2 top-0 w-3 h-3 bg-current opacity-40 rounded-sm"></div>
-             </div>
+         {/* Task View */}
+         <div className="p-2 rounded hover:bg-white/50 dark:hover:bg-white/10 transition-colors cursor-pointer text-gray-700 dark:text-gray-200 hidden sm:block">
+              <div className="w-5 h-5 border-2 border-current rounded bg-transparent relative">
+                  <div className="absolute -right-2 top-0 w-3 h-3 bg-current opacity-40 rounded-sm"></div>
+              </div>
+         </div>
+
+        {/* 
+            --- PINNED APPS AREA --- 
+            To add more pinned apps:
+            1. Copy the block below.
+            2. Change the Icon (Image src or Lucide Component).
+            3. Change the onClick handler to open your desired app.
+        */}
+
+        {/* Pinned File Explorer */}
+        <div 
+            className="p-2 rounded hover:bg-white/50 dark:hover:bg-white/10 transition-colors cursor-pointer active:scale-95 duration-100"
+            onClick={onExplorerClick} 
+            title="File Explorer"
+        >
+            <div className="relative w-6 h-6">
+                <Image src="/Icons/file explorer.png" alt="Explorer" fill className="object-contain" />
+            </div>
         </div>
 
         {/* Separator */}

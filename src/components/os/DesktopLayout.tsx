@@ -12,9 +12,12 @@ import AboutPage from "@/app/about/page";
 import ContactPage from "@/app/contact/page";
 import { HomeView } from "@/components/home/HomeView";
 
+import { FileExplorer } from "@/components/apps/FileExplorer";
+
 // Map IDs to Content Components
 const APP_CONTENT: Record<string, React.ReactNode> = {
     "portfolio": <HomeView />,
+    "explorer": <FileExplorer />,
     "about": <AboutPage />,
     "contact": <ContactPage />,
     "browser": <iframe src="https://www.google.com/webhp?igu=1" className="w-full h-full border-none" title="Browser" />,
@@ -114,6 +117,7 @@ export const DesktopLayout = () => {
       
       <Taskbar 
         onStartClick={() => setStartOpen(!startOpen)} 
+        onExplorerClick={() => openApp("explorer", "File Explorer", "/Icons/file explorer.png")}
         isStartOpen={startOpen}
         openWindows={windows}
         activeWindowId={activeWindow}
