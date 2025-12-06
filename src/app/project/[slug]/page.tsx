@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Github, ExternalLink, Calendar, Layers } from "lucide-react";
 import { PROJECTS } from "@/lib/data";
+import styles from "./project.module.css";
 
 export function generateStaticParams() {
   return PROJECTS.map((project) => ({
@@ -11,62 +12,66 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ProjectDetail({ params }: { params: { slug: string } }) {
-  const project = PROJECTS.find((p) => p.slug === params.slug);
+export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = PROJECTS.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();
   }
 
   return (
-    <div className="max-w-6xl mx-auto pb-10">
+    <div className={styles.pageContainer} data-project={project.slug}>
         <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white mb-6 transition-colors"
+            className={styles.backLink}
         >
             <ArrowLeft size={16} />
             Back to Home
         </Link>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className={styles.gridContainer}>
             {/* Main Content */}
-            <div className="lg:col-span-2 space-y-8">
-                <div className="relative rounded-2xl overflow-hidden shadow-xl aspect-video border border-gray-200 dark:border-white/10 group">
+            <div className={styles.mainContent}>
+                <div className={`${styles.heroImageWrapper} group`}>
                     <Image
                         src={project.image}
                         alt={project.title}
                         fill
-                        className="object-cover"
+                        className={styles.heroImage}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                    <div className={styles.heroOverlay}></div>
                 </div>
 
-                <div className="prose dark:prose-invert max-w-none">
-                    <div className="bg-win-light-card/80 dark:bg-win-dark-card/80 backdrop-blur-md p-8 rounded-xl border border-win-light-border dark:border-win-dark-accent shadow-sm">
-                        <h2 className="text-2xl font-bold mb-4">Project Overview</h2>
-                        <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                <div className={styles.contentWrapper}>
+                    <div className={styles.overviewCard}>
+                        <h2 className={styles.sectionTitle}>Project Overview</h2>
+                        <p className={styles.descriptionText}>
                             {project.fullDescription || project.description}
                         </p>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        <div className="bg-win-light-card/50 dark:bg-win-dark-card/50 p-6 rounded-xl border border-gray-200 dark:border-white/5">
-                            <h3 className="font-semibold mb-2 flex items-center gap-2">
+                    <div className={styles.subSectionGrid}>
+                        <div className={styles.subSectionCard}>
+                            <h3 className={styles.subSectionHeader}>
                                 <Layers size={18} className="text-blue-500" /> Key Features
                             </h3>
-                            <ul className="list-disc list-inside space-y-1 text-sm text-gray-600 dark:text-gray-400">
-                                <li>Real-time data synchronization</li>
-                                <li>Responsive mobile-first design</li>
-                                <li>Secure authentication flow</li>
-                                <li>Cloud infrastructure setup</li>
-                            </ul>
+                            {project.features && project.features.length > 0 ? (
+                                <ul className={styles.featureList}>
+                                    {project.features.map((feature, index) => (
+                                        <li key={index}>{feature}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="text-gray-500 text-sm">No specific features listed.</p>
+                            )}
                         </div>
-                         <div className="bg-win-light-card/50 dark:bg-win-dark-card/50 p-6 rounded-xl border border-gray-200 dark:border-white/5">
-                            <h3 className="font-semibold mb-2 flex items-center gap-2">
+                         <div className={styles.subSectionCard}>
+                            <h3 className={styles.subSectionHeader}>
                                 <Calendar size={18} className="text-blue-500" /> Timeline
                             </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                This project was completed over the course of 3 months, involving initial research, design prototyping, and iterative development sprints.
+                            <p className={styles.timelineText}>
+                                {project.timeline || "Timeline not specified."}
                             </p>
                         </div>
                     </div>
@@ -74,32 +79,36 @@ export default function ProjectDetail({ params }: { params: { slug: string } }) 
             </div>
 
             {/* Sidebar Details */}
-            <div className="space-y-6">
-                <div className="bg-win-light-card dark:bg-win-dark-card p-6 rounded-xl border border-win-light-border dark:border-win-dark-accent shadow-lg sticky top-20">
-                    <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">{project.title}</h1>
-                    <p className="text-gray-500 mb-6">{project.description}</p>
+            <div className={styles.sidebar}>
+                <div className={styles.sidebarCard}>
+                    <h1 className={styles.projectTitle}>{project.title}</h1>
+                    <p className={styles.projectDescription}>{project.description}</p>
 
-                    <div className="space-y-6">
+                    <div className={styles.sidebarSection}>
                         <div>
-                            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Technologies</h3>
-                            <div className="flex flex-wrap gap-2">
+                            <h3 className={styles.techLabel}>Technologies</h3>
+                            <div className={styles.techTags}>
                                 {project.tech.map((t) => (
-                                    <span key={t} className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-md text-xs font-medium border border-blue-200 dark:border-blue-800">
+                                    <span key={t} className={styles.techTag}>
                                         {t}
                                     </span>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <a href="#" className="flex items-center justify-center gap-2 w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all shadow-md hover:shadow-lg">
-                                <ExternalLink size={18} />
-                                Live Demo
-                            </a>
-                            <a href="#" className="flex items-center justify-center gap-2 w-full py-2.5 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white rounded-lg font-medium transition-all">
-                                <Github size={18} />
-                                View Source
-                            </a>
+                        <div className={styles.linksContainer}>
+                            {project.links?.demo && (
+                                <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className={styles.primaryLink}>
+                                    <ExternalLink size={18} />
+                                    Live Demo
+                                </a>
+                            )}
+                            {project.links?.repo && (
+                                <a href={project.links.repo} target="_blank" rel="noopener noreferrer" className={styles.secondaryLink}>
+                                    <Github size={18} />
+                                    View Source
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>
