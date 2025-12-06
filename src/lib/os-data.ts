@@ -1,16 +1,31 @@
-import { Folder, User, Mail, Globe, Code2, Terminal, Layout } from "lucide-react";
 
+// Update this list with your downloaded file paths
 export const DesktopShortcuts = [
-    { id: "portfolio", name: "My Projects", icon: Folder },
-    { id: "about", name: "About Me", icon: User },
-    { id: "contact", name: "Contact Info", icon: Mail },
-    { id: "browser", name: "Chrome", icon: Globe },
+    {
+        id: "portfolio",
+        name: "My Projects",
+        icon: "/Icons/folder.png"
+    },
+    {
+        id: "about",
+        name: "About Me",
+        icon: "/Icons/user.ico"
+    },
+    {
+        id: "contact",
+        name: "Contact Me",
+        icon: "/Icons/mail.ico"
+    },
+    {
+        id: "browser",
+        name: "Chrome",
+        icon: "/Icons/chrome.png"
+    },
 ];
 
 export const StartMenuApps = [
-    { id: "portfolio", name: "File Explorer", icon: Folder },
-    { id: "browser", name: "Edge", icon: Globe },
-    { id: "about", name: "User Profile", icon: User },
-    { id: "contact", name: "Mail", icon: Mail },
-    { id: "terminal", name: "Terminal", icon: Terminal },
+    { id: "portfolio", name: "File Explorer", icon: "/Icons/file explorer.png" },
+    { id: "browser", name: "Chrome", icon: "/Icons/chrome.png" },
+    { id: "contact", name: "Mail", icon: "/Icons/mail.ico" },
+    { id: "terminal", name: "Terminal", icon: "/Icons/terminal.png" },
 ];

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Power, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -8,7 +9,7 @@ import { cn } from "@/lib/utils";
 interface StartMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  apps: { id: string; name: string; icon: any; action: () => void }[];
+  apps: { id: string; name: string; icon: string; action: () => void }[];
 }
 
 export const StartMenu = ({ isOpen, onClose, apps }: StartMenuProps) => {
@@ -57,8 +58,14 @@ export const StartMenu = ({ isOpen, onClose, apps }: StartMenuProps) => {
                                 }}
                                 className="flex flex-col items-center gap-2 p-2 rounded hover:bg-white dark:hover:bg-white/10 transition-colors group aspect-square justify-center"
                             >
-                                <div className="w-8 h-8 flex items-center justify-center text-blue-600 dark:text-blue-400 bg-gray-100 dark:bg-gray-800 rounded-md shadow-sm group-hover:scale-110 transition-transform">
-                                    <app.icon size={20} />
+                                <div className="w-8 h-8 flex items-center justify-center rounded-md shadow-sm group-hover:scale-110 transition-transform relative">
+                                    <Image 
+                                        src={app.icon} 
+                                        alt={app.name} 
+                                        fill 
+                                        className="object-contain" // Use object-contain to keep aspect ratio
+                                        sizes="32px"
+                                    />
                                 </div>
                                 <span className="text-[11px] font-medium text-gray-700 dark:text-gray-200 text-center line-clamp-2 w-full">
                                     {app.name}
@@ -91,10 +98,16 @@ export const StartMenu = ({ isOpen, onClose, apps }: StartMenuProps) => {
                 {/* Footer */}
                 <div className="h-16 bg-[#f3f3f3]/50 dark:bg-[#1f1f1f]/50 border-t border-gray-200 dark:border-white/5 flex items-center justify-between px-8 backdrop-blur-md">
                      <div className="flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 p-2 rounded transition-colors cursor-pointer">
-                         <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs">
-                             US
-                         </div>
-                         <span className="text-xs font-medium text-gray-700 dark:text-gray-200">User</span>
+                         <div className="relative w-8 h-8 rounded-full overflow-hidden border border-gray-1500 dark:border-gray-700 shrink-0">
+                            <Image 
+                                src="/icons/profile.png" 
+                                alt="User"
+                                fill
+                                sizes="32px"
+                                className="object-cover"
+                            />
+                        </div>
+                         <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Profile</span>
                      </div>
 
                      <div className="flex items-center gap-2">

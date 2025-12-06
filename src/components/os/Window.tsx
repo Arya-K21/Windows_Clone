@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Minus, Square, X, Maximize2 } from "lucide-react";
+import Image from "next/image";
 
 interface WindowProps {
   id: string;
@@ -78,7 +79,13 @@ export const Window = ({
             onDoubleClick={() => setIsMaximized(!isMaximized)}
         >
             <div className="flex items-center gap-2 text-xs font-medium">
-                {Icon && <Icon size={14} className="text-blue-500" />}
+                {Icon && (
+                    typeof Icon === "string" ? (
+                        <Image src={Icon} alt={title} width={16} height={16} className="object-contain" />
+                    ) : (
+                        <Icon size={14} className="text-blue-500" />
+                    )
+                )}
                 <span>{title}</span>
             </div>
 

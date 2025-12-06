@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -7,11 +6,11 @@ import { StartMenu } from "@/components/os/StartMenu";
 import { Window } from "@/components/os/Window";
 import { DesktopIcon } from "@/components/os/DesktopIcon";
 import { User, Mail, Folder, Layout, Code2, FolderOpen, Chrome, Terminal } from "lucide-react";
+import Image from "next/image";
 import { StartMenuApps, DesktopShortcuts } from "@/lib/os-data";
 import AboutPage from "@/app/about/page";
 import ContactPage from "@/app/contact/page";
-import { HomeView } from "@/components/home/HomeView"; // We can reuse this inside a window or as part of "File Explorer"
-
+import { HomeView } from "@/components/home/HomeView";
 
 // Map IDs to Content Components
 const APP_CONTENT: Record<string, React.ReactNode> = {
@@ -60,8 +59,21 @@ export const DesktopLayout = () => {
             if (startOpen) setStartOpen(false); // Close start if clicking desktop
         }}
     >
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/windows-bg.jpg"
+          alt="Windows 11 Desktop Background"
+          fill
+          quality={90}
+          priority
+          unoptimized // Disable optimization to prevent blur/compression artifacts
+          className="object-cover object-center pointer-events-none brightness-110 contrast-105 select-none"
+        />
+      </div>
+
       {/* Desktop Grid */}
-      <div className="absolute inset-0 p-2 grid grid-flow-col grid-rows-[repeat(auto-fill,100px)] gap-2 content-start justify-start w-fit">
+      <div className="absolute inset-0 z-10 p-2 grid grid-flow-col grid-rows-[repeat(auto-fill,100px)] gap-2 content-start justify-start w-fit">
          {DesktopShortcuts.map((shortcut) => (
              <DesktopIcon 
                 key={shortcut.id}
@@ -108,8 +120,7 @@ export const DesktopLayout = () => {
         onWindowClick={(id) => {
              const win = windows.find(w => w.id === id);
              if (win?.isMinimized) {
-                 minimizeWindow(id); // Actually toggle functionality would need to check isMinimized state
-                 // Better toggle logic:
+                 minimizeWindow(id); 
                  setWindows(prev => prev.map(w => w.id === id ? { ...w, isMinimized: false } : w));
                  setActiveWindow(id);
              } else {

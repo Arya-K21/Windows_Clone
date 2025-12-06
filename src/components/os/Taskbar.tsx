@@ -88,8 +88,16 @@ export const Taskbar = ({ onStartClick, isStartOpen, openWindows, activeWindowId
                     activeWindowId === win.id ? "w-3 bg-blue-500" : "w-1"
                 )} />
                 
-                <div className="w-6 h-6 flex items-center justify-center text-blue-500">
-                    {win.icon ? <win.icon size={22} /> : <AppWindow size={22} />}
+                <div className="w-6 h-6 flex items-center justify-center relative">
+                    {win.icon ? (
+                        typeof win.icon === "string" ? (
+                            <Image src={win.icon} alt={win.title} fill className="object-contain" sizes="24px" />
+                        ) : (
+                            <win.icon size={22} className="text-blue-500" />
+                        )
+                    ) : ( 
+                        <AppWindow size={22} className="text-blue-500" /> 
+                    )}
                 </div>
 
                 {/* Tooltip Preview - Simplified */}

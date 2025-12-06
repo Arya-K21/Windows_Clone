@@ -5,21 +5,12 @@
 @layer base {
   body {
     @apply antialiased transition-colors duration-300 ease-in-out;
-    background-image: url('/windows-bg.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
   }
 
-  .dark body {
-    /* Darken the background in dark mode, or we could swap the image if we had a dark version. 
-       For now, we'll rely on a backdrop overlay in the layout or use CSS filter. */
-    background-blend-mode: overlay;
-    background-color: rgba(0, 0, 0, 0.7); 
-  }
+  /* I have REMOVED the .dark body section that was causing the muddy overlay */
 }
 
-/* Custom Scrollbar for Webkit */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
