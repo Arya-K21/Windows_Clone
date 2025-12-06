@@ -27,5 +27,5 @@ export const StartMenuApps = [
     { id: "portfolio", name: "File Explorer", icon: "/Icons/file explorer.png" },
     { id: "browser", name: "Chrome", icon: "/Icons/chrome.png" },
     { id: "contact", name: "Mail", icon: "/Icons/mail.ico" },
-    { id: "terminal", name: "Terminal", icon: "/Icons/terminal.png" },
+    { id: "terminal", name: "Terminal", icon: "/Icons/Terminal.png" },
 ];
